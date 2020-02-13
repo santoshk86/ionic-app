@@ -1,6 +1,8 @@
+import { UserSettings } from './services/user-settings.service';
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Events, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -10,23 +12,14 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  public appPages = [
-    {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    },
-    {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
-    }
-  ];
-
+  favoriteTeams: any[];
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private router: Router,
+    private userSettings: UserSettings,
+    private events: Events
   ) {
     this.initializeApp();
   }
@@ -35,6 +28,23 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      console.log('initializeApp');
+      this.events.subscribe('favorites:changed', () => this.refreshFavorites());
+      this.refreshFavorites();
     });
   }
+  goHome() {
+    this.router.navigate(['my-teams']);
+  }
+
+  gotoTournament() {
+    this.router.navigate(['tournaments']);
+  }
+
+  refreshFavorites() {
+    this.favoriteTeams = this.userSettings.getAllFavorites();
+  }
+  gotoTeam(favorite) {
+  }
+
 }

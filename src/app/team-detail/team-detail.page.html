@@ -1,0 +1,62 @@
+<ion-header translucent>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>   
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh) = "refreshAll($event)" >
+    <ion-refresher-content>
+
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-card>
+   <ion-card-content>
+     <ion-grid>
+      <ion-row>
+        <ion-col >
+          <h2>Record: {{teamStanding.wins}}--{{teamStanding.losses}}</h2>
+          <p>Coach: {{team.coach}} </p>
+        </ion-col>
+        <ion-col>
+          <ion-button fill="outline" (click)="toggleFollow()" *ngIf="!isFollowing"  >
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+            Add Favorite
+          </ion-button>
+          <ion-button (click)="toggleFollow()" *ngIf="isFollowing"  >
+            <ion-icon slot="icon-only"  name="star"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-item>
+      <ion-label>Date Filter: </ion-label>
+      <ion-toggle [(ngModel)] = "useDateFilter" (ionChange) = "dateChanged()"></ion-toggle>
+      <ion-datetime displayFormat = "M/D/YYYY" pickerFormat = "M/D/YYYY" [(ngModel)] = "dateFilter" (ionChange) = "dateChanged()" [(disabled)] = "!useDateFilter"></ion-datetime>
+    </ion-item>
+   </ion-card-content>
+  </ion-card>
+    <ion-list>
+      <ion-item class="team_detail_grid_size" *ngFor="let game of filtergames"  (click)="gameClicked($event,game)" >
+        <ion-grid>
+         <ion-row>
+           <ion-col size="3">
+             <p>{{game.time | date:'M/d/yy'}}</p>
+             <p>{{game.time | date: 'shortTime'}}</p>
+           </ion-col>
+           <ion-col size="6">
+            <p>{{game.homeAway}} {{game.opponent}}</p>
+            <p>{{game.location}}</p>
+           </ion-col>
+           <ion-col size="3">
+                  {{game.scoreDisplay}}
+                  <ion-badge [color]="getScoreDisplayBadgeClass(game)">
+                    {{getScoreWonL(game)}}
+                  </ion-badge>
+           </ion-col>
+         </ion-row>
+         </ion-grid>
+      </ion-item>
+    </ion-list>
+</ion-content>

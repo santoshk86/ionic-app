@@ -1,0 +1,63 @@
+<ion-header translucent>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Game</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+  <ion-row>
+      <ion-col width-50 text-center class="divider-col">
+          <ion-button clear expand="full" (click)="teamTapped(game.team1Id)">Home</ion-button>
+      </ion-col>
+      <ion-col width-50 text-center>
+      <ion-button clear expand="full" (click)="teamTapped(game.team2Id)">Away</ion-button>
+      </ion-col>
+  </ion-row>
+  <ion-row center>
+      <ion-col width-50 text-center class="divider-col" (click)="teamTapped(game.team1Id)">
+          <h4>{{game.team1}}</h4>
+      </ion-col>
+      <ion-col width-50 text-center (click)="teamTapped(game.team2Id)">
+          <h4>{{game.team2}}</h4>
+      </ion-col>
+  </ion-row>
+  <ion-row baseline class="top-bottom-border">
+      <ion-col text-center (click)="teamTapped(game.team1Id)">
+        <ion-label [color]="isWinner(game.team1Score, game.team2Score)" >{{game.team1Score}} </ion-label>
+      </ion-col>
+      <ion-col text-center>
+          <ion-label>Score</ion-label>
+      </ion-col>
+      <ion-col text-center (click)="teamTapped(game.team2Id)">
+        <ion-label [color]="isWinner(game.team2Score, game.team1Score)" >{{game.team2Score}}</ion-label>
+      </ion-col>
+  </ion-row>
+</ion-grid>
+  <ion-card>
+      <ion-item>
+          <ion-icon name="calendar" item-left></ion-icon>
+          {{game.gameTime | date:'M/d/yy'}} {{game.gameTime | date:'shortTime'}}
+      </ion-item>
+    <ion-grid>
+      <ion-row>
+          <ion-col width-60>
+              <ion-label>{{game.location}}</ion-label>
+          </ion-col>
+          <ion-col width-40 text-right>
+              <ion-button fill="outline" (click)="goToMap()">
+                  <ion-icon name="map"></ion-icon>
+                </ion-button>
+              <ion-button fill="outline" (click)="goToDirections()">
+                  <ion-icon name="navigate"></ion-icon>
+              </ion-button>
+          </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+</ion-content>
+
+

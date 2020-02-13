@@ -1,0 +1,28 @@
+<ion-header translucent>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end" (click)="goHome()">
+        <ion-icon slot="icon-only" name="home"></ion-icon>
+    </ion-buttons>
+
+    <ion-title>{{team.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+
+    <ion-tab-button  tab="teamDetailTab">
+      <ion-icon name="basketball"></ion-icon>
+      <ion-label>Team</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="standingsTab">
+      <ion-icon name="podium"></ion-icon>
+      <ion-label>Standings</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+</ion-tabs> 
